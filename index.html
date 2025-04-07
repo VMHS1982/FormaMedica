@@ -1,148 +1,225 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salud Vital - Registro de Pacientes</title>
-    <!-- Incluir Google Icons desde un CDN -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-color: #f4f4f9;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1em;
-            width: 100%;
-            text-align: center;
-            position: relative;
-        }
-        header img {
-            width: 50px;
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 90%;
-            max-width: 600px;
-            margin-top: 20px;
-        }
-        .form-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        .form-group span {
-            margin-right: 10px;
-        }
-        .form-group input,
-        .form-group select {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .form-group button {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SALUD VITAL</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+    header {
+      background-color: #d0e8ff;
+      text-align: center;
+      padding: 1rem;
+      position: relative;
+    }
+    header img.logo {
+      position: absolute;
+      left: 1rem;
+      top: 1rem;
+      width: 60px;
+    }
+    header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem;
+      margin: 0;
+    }
+    .doctor-image {
+      width: 100%;
+      height: auto;
+      max-height: 400px;
+      object-fit: cover;
+    }
+    .main-section {
+      display: flex;
+      padding: 2rem;
+      gap: 2rem;
+    }
+    .history, .services {
+      flex: 1;
+      background-color: #ffffff;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .services ul {
+      list-style: none;
+      padding: 0;
+    }
+    .services li {
+      margin: 1rem 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #0077cc;
+    }
+    .services li:hover {
+      text-decoration: underline;
+    }
+    footer {
+      background-color: #d0e8ff;
+      padding: 2rem;
+      display: flex;
+      justify-content: flex-start;
+    }
+    form {
+      font-size: 0.9rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.8rem;
+      flex: 1;
+      max-width: 700px;
+    }
+    form label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    form input, form select, form textarea {
+      padding: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      flex: 1;
+    }
+    form .form-group {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    form button {
+      margin-top: 1rem;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 150px;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      z-index: 1000;
+      max-width: 500px;
+    }
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+    .close-btn {
+      margin-top: 1rem;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <img src="https://via.placeholder.com/50" alt="Medical Icon">
-        <h1>Salud Vital - Registro de Pacientes</h1>
-    </header>
-    <div class="container">
-        <form>
-            <div class="form-group">
-                <span class="material-icons">person</span>
-                <input type="text" placeholder="Nombre Completo" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">cake</span>
-                <input type="number" placeholder="Edad" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">wc</span>
-                <select required>
-                    <option value="" disabled selected>Sexo</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">bloodtype</span>
-                <input type="text" placeholder="Tipo de Sangre" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">work</span>
-                <input type="text" placeholder="Ocupación" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">record_voice_over</span>
-                <input type="text" placeholder="Estado Civil" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">phone</span>
-                <input type="text" placeholder="Número de Contacto" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">email</span>
-                <input type="email" placeholder="Correo Electrónico" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">notes</span>
-                <input type="text" placeholder="Motivo de la Cita" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">local_hospital</span>
-                <input type="text" placeholder="Tipo de Enfermedad (si tiene)" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">priority_high</span>
-                <select required>
-                    <option value="" disabled selected>Nivel de Urgencia</option>
-                    <option value="Bajo">Bajo</option>
-                    <option value="Medio">Medio</option>
-                    <option value="Alto">Alto</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">date_range</span>
-                <input type="datetime-local" placeholder="Fecha y Hora Deseada" required>
-            </div>
-            <div class="form-group">
-                <span class="material-icons">category</span>
-                <select required>
-                    <option value="" disabled selected>Tipo de Consulta</option>
-                    <option value="General">Consulta General</option>
-                    <option value="Especialidad">Especialidad</option>
-                    <option value="Otro">Otro</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <button type="submit">Registrar Cita</button>
-            </div>
-        </form>
+  <header>
+    <img src="https://img.icons8.com/ios-filled/100/medical-doctor.png" class="logo" alt="Logo Salud">
+    <h1>SALUD VITAL</h1>
+    <img class="doctor-image" src="https://images.unsplash.com/photo-1600880292089-90e6aef51c9b" alt="Doctor atendiendo pacientes">
+  </header>
+
+  <div class="main-section">
+    <div class="history">
+      <h2>Historia del Hospital</h2>
+      <p>[Aquí se incluirá el resumen de la historia en 500 palabras, como se especificó anteriormente.]</p>
     </div>
+    <div class="services">
+      <h2>Servicios</h2>
+      <ul>
+        <li onclick="openModal('checkup')"><span class="material-icons">favorite</span>CheckUp General</li>
+        <li onclick="openModal('nutricion')"><span class="material-icons">restaurant</span>Consulta de Nutrición</li>
+        <li onclick="openModal('urgencias')"><span class="material-icons">local_hospital</span>Atención de Urgencias</li>
+        <li onclick="openModal('primer_nivel')"><span class="material-icons">medical_services</span>Consultas Primer Nivel</li>
+      </ul>
+    </div>
+  </div>
+
+  <footer>
+    <form>
+      <label><span class="material-icons">person</span><input type="text" placeholder="Nombre completo"></label>
+      <label><span class="material-icons">calendar_today</span><input type="number" placeholder="Edad"></label>
+      <label><span class="material-icons">wc</span><select><option>Sexo</option><option>Masculino</option><option>Femenino</option><option>Otro</option></select></label>
+      <label><span class="material-icons">opacity</span><input type="text" placeholder="Tipo de sangre"></label>
+      <label><span class="material-icons">work</span><input type="text" placeholder="Ocupación"></label>
+      <label><span class="material-icons">group</span><input type="text" placeholder="Estado civil"></label>
+      <label><span class="material-icons">phone</span><input type="tel" placeholder="Número de contacto"></label>
+      <label><span class="material-icons">email</span><input type="email" placeholder="Correo electrónico"></label>
+      <label><span class="material-icons">event_note</span><input type="text" placeholder="Motivo de la cita"></label>
+      <label><span class="material-icons">healing</span><input type="text" placeholder="Tipo de enfermedad"></label>
+      <label><span class="material-icons">priority_high</span><select><option>Nivel de urgencia</option><option>Bajo</option><option>Medio</option><option>Alto</option></select></label>
+      <label><span class="material-icons">today</span><input type="date"></label>
+      <label><span class="material-icons">schedule</span><input type="time"></label>
+      <label><span class="material-icons">medical_services</span><select><option>Tipo de consulta</option><option>General</option><option>Especialidad</option><option>Otra</option></select></label>
+      <button type="submit">Registrar</button>
+    </form>
+  </footer>
+
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modal">
+    <div id="modal-content"></div>
+    <button class="close-btn" onclick="closeModal()">Cerrar</button>
+  </div>
+
+  <script>
+    const servicios = {
+      checkup: {
+        title: "CheckUp General",
+        content: "<strong>Descripción:</strong> Evaluación médica general para revisar el estado de salud. <br><strong>Objetivo:</strong> Identificar factores de riesgo y prevenir enfermedades.<br><strong>Requisitos:</strong> Presentarse en ayunas de al menos 8 horas."
+      },
+      nutricion: {
+        title: "Consulta de Nutrición",
+        content: "<strong>Descripción:</strong> Consulta personalizada con especialistas en alimentación. <br><strong>Objetivo:</strong> Promover hábitos alimenticios saludables.<br><strong>Requisitos:</strong> Llevar un registro alimenticio de los últimos días."
+      },
+      urgencias: {
+        title: "Atención de Urgencias",
+        content: "<strong>Descripción:</strong> Atención inmediata para casos críticos. <br><strong>Objetivo:</strong> Estabilizar y tratar al paciente de forma rápida.<br><strong>Requisitos:</strong> Acudir sin cita previa en caso de emergencia."
+      },
+      primer_nivel: {
+        title: "Consultas Primer Nivel",
+        content: "<strong>Descripción:</strong> Atención primaria por médicos generales. <br><strong>Objetivo:</strong> Diagnóstico y tratamiento inicial.<br><strong>Requisitos:</strong> Presentar documento de identidad."
+      }
+    };
+
+    function openModal(key) {
+      const modal = document.getElementById('modal');
+      const overlay = document.getElementById('overlay');
+      const content = document.getElementById('modal-content');
+      const servicio = servicios[key];
+      content.innerHTML = `<h3>${servicio.title}</h3><p>${servicio.content}</p>`;
+      modal.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('modal').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+  </script>
 </body>
 </html>
