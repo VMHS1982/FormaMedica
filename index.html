@@ -1,224 +1,296 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>SALUD VITAL</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto&display=swap" rel="stylesheet">
+  <!-- Google Fonts & Material Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Roboto&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <style>
     body {
-      margin: 0;
       font-family: 'Roboto', sans-serif;
-      background-color: #f0f8ff;
-      color: #333;
+      background-color: #f0f6fb;
+      margin: 0;
+      padding: 0;
+      color: #2c3e50;
     }
+
     header {
-      background-color: #d0e8ff;
-      text-align: center;
-      padding: 1rem;
-      position: relative;
+      background-color: #d0e6f7;
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      border-bottom: 3px solid #a2cbe2;
     }
-    header img.logo {
-      position: absolute;
-      left: 1rem;
-      top: 1rem;
-      width: 60px;
+
+    header img {
+      height: 60px;
+      margin-right: 20px;
     }
+
     header h1 {
       font-family: 'Playfair Display', serif;
       font-size: 3rem;
-      margin: 0;
+      margin: 0 auto;
+      text-transform: uppercase;
+      color: #1b3d59;
     }
-    .doctor-image {
-      width: 100%;
-      height: auto;
-      max-height: 400px;
-      object-fit: cover;
-    }
-    .main-section {
+
+    main {
       display: flex;
-      padding: 2rem;
-      gap: 2rem;
+      flex-wrap: wrap;
+      padding: 20px;
     }
-    .history, .services {
+
+    .panel-izquierdo, .panel-derecho {
       flex: 1;
-      background-color: #ffffff;
-      padding: 1.5rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      min-width: 300px;
+      padding: 20px;
     }
-    .services ul {
+
+    .panel-izquierdo {
+      border-right: 2px solid #c0dff0;
+    }
+
+    .panel-derecho ul {
       list-style: none;
       padding: 0;
     }
-    .services li {
-      margin: 1rem 0;
+
+    .panel-derecho li {
+      display: flex;
+      align-items: center;
+      background-color: #e3f2fc;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      color: #0077cc;
+      transition: background 0.3s ease;
     }
-    .services li:hover {
-      text-decoration: underline;
+
+    .panel-derecho li:hover {
+      background-color: #cde8fb;
     }
+
+    .panel-derecho .material-icons {
+      margin-right: 10px;
+      color: #0077b6;
+    }
+
     footer {
-      background-color: #d0e8ff;
-      padding: 2rem;
-      display: flex;
-      justify-content: flex-start;
+      background-color: #d0e6f7;
+      padding: 20px;
+      border-top: 3px solid #a2cbe2;
     }
+
     form {
-      font-size: 0.9rem;
+      max-width: 900px;
+      margin: auto;
       display: grid;
-      grid-template-columns: 1fr;
-      gap: 0.8rem;
-      flex: 1;
-      max-width: 700px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 15px;
+      font-size: 0.9rem;
     }
-    form label {
+
+    label {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
     }
-    form input, form select, form textarea {
-      padding: 0.4rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      flex: 1;
+
+    label .material-icons {
+      margin-right: 6px;
+      color: #0077b6;
     }
-    form .form-group {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+
+    input, select, textarea {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid #b0c4d6;
+      border-radius: 5px;
+      margin-top: 5px;
     }
-    form button {
-      margin-top: 1rem;
-      background-color: #0077cc;
+
+    button {
+      grid-column: span 2;
+      padding: 10px 20px;
+      background-color: #0077b6;
       color: white;
       border: none;
-      padding: 0.6rem;
-      border-radius: 6px;
+      border-radius: 8px;
+      font-size: 1rem;
       cursor: pointer;
-      width: 150px;
     }
+
+    button:hover {
+      background-color: #005b91;
+    }
+
+    /* Modal Styles */
     .modal {
-      display: none;
       position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-      max-width: 500px;
-    }
-    .overlay {
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
       display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
       z-index: 999;
     }
+
+    .modal-content {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 600px;
+      text-align: left;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 10px;
+      color: #1b3d59;
+    }
+
+    .modal-content p {
+      color: #333;
+    }
+
     .close-btn {
-      margin-top: 1rem;
-      background-color: #0077cc;
+      margin-top: 20px;
+      padding: 10px;
+      background: #0077b6;
       color: white;
       border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
+
+  <!-- Panel Superior -->
   <header>
-    <img src="https://img.icons8.com/ios-filled/100/medical-doctor.png" class="logo" alt="Logo Salud">
+    <img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" alt="Logo Salud">
     <h1>SALUD VITAL</h1>
-    <img class="doctor-image" src="https://images.unsplash.com/photo-1600880292089-90e6aef51c9b" alt="Doctor atendiendo pacientes">
   </header>
 
-  <div class="main-section">
-    <div class="history">
-      <h2>Historia del Hospital</h2>
-      <p>[Aquí se incluirá el resumen de la historia en 500 palabras, como se especificó anteriormente.]</p>
+  <!-- Panel Historia + Servicios -->
+  <main>
+    <div class="panel-izquierdo">
+      <h2>Nuestra Historia</h2>
+      <p>
+        Soy el Dr. Ernesto Valverde, fundador de Salud Vital, un hospital que nació de un sueño en los años 40s. En una época marcada por escasos recursos y limitada atención médica, decidí abrir las puertas de un pequeño dispensario en un barrio humilde. Con el paso de los años, gracias al apoyo de la comunidad y a mi fe en la medicina como vocación, Salud Vital se convirtió en un referente de atención humana y profesional. Nuestro compromiso ha sido siempre el bienestar de cada paciente, brindando atención cálida y personalizada. Desde nuestros inicios hemos apostado por la innovación médica y por formar un equipo con ética y empatía. Hoy, después de más de 80 años, seguimos avanzando con el mismo espíritu: cuidar la vida con excelencia.
+      </p>
     </div>
-    <div class="services">
-      <h2>Servicios</h2>
+
+    <div class="panel-derecho">
+      <h2>Servicios Médicos</h2>
       <ul>
-        <li onclick="openModal('checkup')"><span class="material-icons">favorite</span>CheckUp General</li>
-        <li onclick="openModal('nutricion')"><span class="material-icons">restaurant</span>Consulta de Nutrición</li>
-        <li onclick="openModal('urgencias')"><span class="material-icons">local_hospital</span>Atención de Urgencias</li>
-        <li onclick="openModal('primer_nivel')"><span class="material-icons">medical_services</span>Consultas Primer Nivel</li>
+        <li onclick="openModal('checkup')"><span class="material-icons">medical_services</span> CheckUp General</li>
+        <li onclick="openModal('nutricion')"><span class="material-icons">restaurant</span> Consulta de Nutrición</li>
+        <li onclick="openModal('urgencias')"><span class="material-icons">emergency</span> Atención de Urgencias</li>
+        <li onclick="openModal('primernivel')"><span class="material-icons">local_hospital</span> Consultas Primer Nivel</li>
       </ul>
     </div>
-  </div>
+  </main>
 
+  <!-- Panel Inferior -->
   <footer>
+    <h2>Registro de Pacientes</h2>
     <form>
-      <label><span class="material-icons">person</span><input type="text" placeholder="Nombre completo"></label>
-      <label><span class="material-icons">calendar_today</span><input type="number" placeholder="Edad"></label>
-      <label><span class="material-icons">wc</span><select><option>Sexo</option><option>Masculino</option><option>Femenino</option><option>Otro</option></select></label>
-      <label><span class="material-icons">opacity</span><input type="text" placeholder="Tipo de sangre"></label>
-      <label><span class="material-icons">work</span><input type="text" placeholder="Ocupación"></label>
-      <label><span class="material-icons">group</span><input type="text" placeholder="Estado civil"></label>
-      <label><span class="material-icons">phone</span><input type="tel" placeholder="Número de contacto"></label>
-      <label><span class="material-icons">email</span><input type="email" placeholder="Correo electrónico"></label>
-      <label><span class="material-icons">event_note</span><input type="text" placeholder="Motivo de la cita"></label>
-      <label><span class="material-icons">healing</span><input type="text" placeholder="Tipo de enfermedad"></label>
-      <label><span class="material-icons">priority_high</span><select><option>Nivel de urgencia</option><option>Bajo</option><option>Medio</option><option>Alto</option></select></label>
-      <label><span class="material-icons">today</span><input type="date"></label>
-      <label><span class="material-icons">schedule</span><input type="time"></label>
-      <label><span class="material-icons">medical_services</span><select><option>Tipo de consulta</option><option>General</option><option>Especialidad</option><option>Otra</option></select></label>
-      <button type="submit">Registrar</button>
+      <label><span class="material-icons">person</span> Nombre Completo</label>
+      <input type="text" name="nombre" required>
+
+      <label><span class="material-icons">calendar_today</span> Edad</label>
+      <input type="number" name="edad" required>
+
+      <label><span class="material-icons">wc</span> Sexo</label>
+      <select name="sexo" required>
+        <option>Masculino</option>
+        <option>Femenino</option>
+        <option>Otro</option>
+      </select>
+
+      <label><span class="material-icons">invert_colors</span> Tipo de Sangre</label>
+      <input type="text" name="sangre" required>
+
+      <label><span class="material-icons">work</span> Ocupación</label>
+      <input type="text" name="ocupacion" required>
+
+      <label><span class="material-icons">group</span> Estado Civil</label>
+      <input type="text" name="estado" required>
+
+      <label><span class="material-icons">call</span> Contacto</label>
+      <input type="tel" name="contacto" required>
+
+      <label><span class="material-icons">email</span> Correo Electrónico</label>
+      <input type="email" name="correo" required>
+
+      <label><span class="material-icons">healing</span> Motivo de la Cita</label>
+      <input type="text" name="motivo" required>
+
+      <label><span class="material-icons">bug_report</span> Tipo de Enfermedad</label>
+      <input type="text" name="enfermedad">
+
+      <label><span class="material-icons">report</span> Nivel de Urgencia</label>
+      <select name="urgencia">
+        <option>Bajo</option>
+        <option>Medio</option>
+        <option>Alto</option>
+      </select>
+
+      <label><span class="material-icons">event</span> Fecha Deseada</label>
+      <input type="date" name="fecha">
+
+      <label><span class="material-icons">schedule</span> Hora Deseada</label>
+      <input type="time" name="hora">
+
+      <label><span class="material-icons">category</span> Tipo de Consulta</label>
+      <select name="tipo_consulta">
+        <option>Consulta General</option>
+        <option>Especialidad</option>
+        <option>Otra</option>
+      </select>
+
+      <button type="submit">Registrar Paciente</button>
     </form>
   </footer>
 
-  <div class="overlay" id="overlay"></div>
-  <div class="modal" id="modal">
-    <div id="modal-content"></div>
-    <button class="close-btn" onclick="closeModal()">Cerrar</button>
+  <!-- Ventana Modal -->
+  <div class="modal" id="modalServicio">
+    <div class="modal-content">
+      <h3 id="modalTitle">Servicio</h3>
+      <p id="modalDesc"></p>
+      <button class="close-btn" onclick="document.getElementById('modalServicio').style.display='none'">Cerrar</button>
+    </div>
   </div>
 
   <script>
     const servicios = {
       checkup: {
-        title: "CheckUp General",
-        content: "<strong>Descripción:</strong> Evaluación médica general para revisar el estado de salud. <br><strong>Objetivo:</strong> Identificar factores de riesgo y prevenir enfermedades.<br><strong>Requisitos:</strong> Presentarse en ayunas de al menos 8 horas."
+        titulo: "CheckUp General",
+        descripcion: "Un análisis médico completo que permite evaluar tu estado de salud general. Objetivo: detectar a tiempo factores de riesgo. Requisitos: ayuno de 8 horas, cédula de identidad y agendar cita previa."
       },
       nutricion: {
-        title: "Consulta de Nutrición",
-        content: "<strong>Descripción:</strong> Consulta personalizada con especialistas en alimentación. <br><strong>Objetivo:</strong> Promover hábitos alimenticios saludables.<br><strong>Requisitos:</strong> Llevar un registro alimenticio de los últimos días."
+        titulo: "Consulta de Nutrición",
+        descripcion: "Evaluación del estado nutricional y diseño de un plan alimenticio personalizado. Objetivo: mejorar la salud digestiva y metabólica. Requisitos: historial médico y disposición para seguimiento."
       },
       urgencias: {
-        title: "Atención de Urgencias",
-        content: "<strong>Descripción:</strong> Atención inmediata para casos críticos. <br><strong>Objetivo:</strong> Estabilizar y tratar al paciente de forma rápida.<br><strong>Requisitos:</strong> Acudir sin cita previa en caso de emergencia."
+        titulo: "Atención de Urgencias",
+        descripcion: "Atención inmediata en situaciones críticas. Objetivo: estabilizar al paciente con prontitud. Requisitos: presentar al paciente físicamente o llamar al 911 para traslados."
       },
-      primer_nivel: {
-        title: "Consultas Primer Nivel",
-        content: "<strong>Descripción:</strong> Atención primaria por médicos generales. <br><strong>Objetivo:</strong> Diagnóstico y tratamiento inicial.<br><strong>Requisitos:</strong> Presentar documento de identidad."
+      primernivel: {
+        titulo: "Consultas Primer Nivel",
+        descripcion: "Atención médica básica para síntomas comunes. Objetivo: ofrecer diagnóstico temprano y orientación. Requisitos: agendar cita y presentar documento de identificación."
       }
     };
 
-    function openModal(key) {
-      const modal = document.getElementById('modal');
-      const overlay = document.getElementById('overlay');
-      const content = document.getElementById('modal-content');
-      const servicio = servicios[key];
-      content.innerHTML = `<h3>${servicio.title}</h3><p>${servicio.content}</p>`;
-      modal.style.display = 'block';
-      overlay.style.display = 'block';
-    }
-
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-      document.getElementById('overlay').style.display = 'none';
+    function openModal(servicio) {
+      const data = servicios[servicio];
+      document.getElementById("modalTitle").innerText = data.titulo;
+      document.getElementById("modalDesc").innerText = data.descripcion;
+      document.getElementById("modalServicio").style.display = 'flex';
     }
   </script>
 </body>
